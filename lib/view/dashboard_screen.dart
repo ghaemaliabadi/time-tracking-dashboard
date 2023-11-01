@@ -6,16 +6,15 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(Object context) {
-    return const Scaffold(
-        body: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                'Dashboard Screen',
-                style: TextStyle(fontSize: 24),
-              ),
-            ],
+    return Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                Text('داشبورد گزارش‌کارها'),
+              ],
+            ),
           ),
         ),
     );
