@@ -1,5 +1,4 @@
 import 'package:report_dashboard_with_getx/constant/api_constants.dart';
-import 'package:report_dashboard_with_getx/model/task_model.dart';
 
 class UserModel {
   // int? id;
@@ -33,7 +32,23 @@ class UserModel {
     } else {
       var min = yesterdayLength! % 60;
       var hour = yesterdayLength! ~/ 60;
-      return '$hour:$min';
+      return convertToPersianNumber('$hour:$min');
     }
+  }
+
+  // convert english number to persian number
+  convertToPersianNumber(String input) {
+    var result = input;
+    result = result.replaceAll('0', '۰');
+    result = result.replaceAll('1', '۱');
+    result = result.replaceAll('2', '۲');
+    result = result.replaceAll('3', '۳');
+    result = result.replaceAll('4', '۴');
+    result = result.replaceAll('5', '۵');
+    result = result.replaceAll('6', '۶');
+    result = result.replaceAll('7', '۷');
+    result = result.replaceAll('8', '۸');
+    result = result.replaceAll('9', '۹');
+    return result;
   }
 }

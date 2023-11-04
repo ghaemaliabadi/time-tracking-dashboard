@@ -1,55 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:report_dashboard_with_getx/themes/app_themes.dart';
-
+import 'package:report_dashboard_with_getx/constant/api_constants.dart';
 import '../controller/theme_controller.dart';
 import '../model/user_model.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final List<UserModel> users = [
       UserModel(
         name: 'عرفان حسن‌پور',
-        profilePhoto: 'erfan.jpg',
+        profilePhoto: '${ApiUrlConstants.baseUrl}erfan.jpg',
         yesterdayLength: 195,
         isActiveToday: true,
         lastTaskToday: 'آخرین تسک تستی دیروز عرفان',
       ),
       UserModel(
         name: 'هدی لطفی',
-        profilePhoto: 'hoda.jpg',
+        profilePhoto: '${ApiUrlConstants.baseUrl}hoda.jpg',
         yesterdayLength: 205,
         isActiveToday: true,
         lastTaskToday: 'آخرین تسک تستی دیروز هدی',
       ),
       UserModel(
         name: 'حنانه اشراقی',
-        profilePhoto: 'hana.jpg',
+        profilePhoto: '${ApiUrlConstants.baseUrl}hana.jpg',
         yesterdayLength: 125,
         isActiveToday: true,
         lastTaskToday: 'آخرین تسک تستی دیروز حنا',
       ),
       UserModel(
         name: 'هانیه حیدری',
-        profilePhoto: 'hana.jpg',
+        profilePhoto: '${ApiUrlConstants.baseUrl}hana.jpg',
         yesterdayLength: 140,
         isActiveToday: true,
         lastTaskToday: 'آخرین تسک تستی دیروز هانیه',
       ),
       UserModel(
         name: 'قائم علی‌آبادی',
-        profilePhoto: 'ghaem.jpg',
+        profilePhoto: '${ApiUrlConstants.baseUrl}ghaem.jpg',
         yesterdayLength: 155,
         isActiveToday: true,
         lastTaskToday: 'آخرین تسک تستی دیروز قائم',
       ),
       UserModel(
         name: 'مبینا هاشمیان',
-        profilePhoto: 'mobina.jpg',
+        profilePhoto: '${ApiUrlConstants.baseUrl}mobina.jpg',
         yesterdayLength: 100,
         isActiveToday: true,
         lastTaskToday: 'آخرین تسک تستی دیروز مبینا',
@@ -61,7 +59,6 @@ class DashboardScreen extends StatelessWidget {
     var textTheme = Theme.of(context).textTheme;
     var colorScheme = Theme.of(context).colorScheme;
     var pageWidth = MediaQuery.of(context).size.width;
-    var pageHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
