@@ -2,7 +2,7 @@ import 'package:report_dashboard_with_getx/constant/api_constants.dart';
 import 'package:report_dashboard_with_getx/model/task_model.dart';
 
 class UserModel {
-  int? id;
+  // int? id;
   String? name;
   String? profilePhoto;
   int? yesterdayLength;
@@ -10,7 +10,7 @@ class UserModel {
   String? lastTaskToday;
 
   UserModel({
-    this.id,
+    // this.id,
     this.name,
     this.profilePhoto,
     this.yesterdayLength,
@@ -19,11 +19,21 @@ class UserModel {
   });
 
   UserModel.fromJson(Map<String, dynamic> element) {
-    id = element['id'];
+    // id = element['id'];
     name = element['name'];
     profilePhoto = ApiUrlConstants.baseUrl + element['profile_photo'];
     yesterdayLength = element['yesterday_length'];
     isActiveToday = element['is_active_today'];
     lastTaskToday = element['last_task_today'];
+  }
+
+  get userLengthString {
+    if (yesterdayLength == null) {
+      return '0';
+    } else {
+      var min = yesterdayLength! % 60;
+      var hour = yesterdayLength! ~/ 60;
+      return '$hour:$min';
+    }
   }
 }

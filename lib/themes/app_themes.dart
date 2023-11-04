@@ -4,18 +4,24 @@ import 'package:report_dashboard_with_getx/gen/fonts.gen.dart';
 class AppThemes {
   static const darkTheme = ColorScheme.dark(
     background: Color(0xFF111926),
-    onBackground: Color(0xFF0d121d),
-    primary: Color(0xffbebec0),
+    onBackground: Colors.white,
+    secondary: Color(0xFF0d121d),
+    primary: Color(0xffaeaeb0),
+    tertiary: Color(0xFFff1b5c),
     surfaceVariant: Color(0xFF49454F),
     onSurfaceVariant: Color(0xFFCAC4D0),
+    shadow: Color(0x33000000),
   );
 
   static ColorScheme lightTheme = const ColorScheme.light(
-    background: Color(0xFFE1E0E0),
-    onBackground: Color(0xFFE1E0E0),
+    background: Color(0xFFf2f4f8),
+    onBackground: Colors.black,
+    secondary: Color(0xFFffffff),
     primary: Color(0xFF49454F),
+    tertiary: Color(0xFFff1b5c),
     surfaceVariant: Color(0xFF57545B),
     onSurfaceVariant: Color(0xFF757575),
+    shadow: Color(0x33000000),
   );
   static const displayLargeSize = 32.0 + 8;
   static const displayMediumSize = 28.0 + 8;

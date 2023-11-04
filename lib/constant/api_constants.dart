@@ -1,4 +1,4 @@
 class ApiUrlConstants {
   ApiUrlConstants._();
-  static const String baseUrl = "";
+  static const String baseUrl = ""; // with / at the end
 }

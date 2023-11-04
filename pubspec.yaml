@@ -38,6 +38,7 @@ dependencies:
   get: ^4.6.6
   persian_datetime_picker: ^2.6.0
   get_storage: ^2.1.1
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:

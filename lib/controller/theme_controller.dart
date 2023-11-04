@@ -10,7 +10,7 @@ class ThemeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    isDarkMode.value = box.read('isDarkMode') ?? false;
+    isDarkMode.value = box.read('isDarkMode') ?? true;
     ever(isDarkMode, (_) => box.write('isDarkMode', isDarkMode.value));
   }
 
