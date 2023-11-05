@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:report_dashboard_with_getx/constant/api_constants.dart';
+import 'package:report_dashboard_with_getx/view/profile_screen.dart';
 import '../controller/theme_controller.dart';
 import '../model/user_model.dart';
 
@@ -12,6 +13,7 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<UserModel> users = [
       UserModel(
+        uniqueName: 'erfan',
         name: 'عرفان حسن‌پور',
         role: 'مدیر دپارتمان ریاضی',
         profilePhoto: '${ApiUrlConstants.baseUrl}erfan.jpg',
@@ -20,6 +22,7 @@ class DashboardScreen extends StatelessWidget {
         lastTaskToday: 'آخرین تسک تستی دیروز عرفان',
       ),
       UserModel(
+        uniqueName: 'hoda',
         name: 'هدی لطفی',
         role: 'مدیر محتوا',
         profilePhoto: '${ApiUrlConstants.baseUrl}hoda.jpg',
@@ -28,6 +31,7 @@ class DashboardScreen extends StatelessWidget {
         lastTaskToday: 'آخرین تسک تستی دیروز هدی',
       ),
       UserModel(
+        uniqueName: 'hana',
         name: 'حنانه اشراقی',
         role: 'مدیر دپارتمان انسانی',
         profilePhoto: '${ApiUrlConstants.baseUrl}hana.jpg',
@@ -36,6 +40,7 @@ class DashboardScreen extends StatelessWidget {
         lastTaskToday: 'آخرین تسک تستی دیروز حنا',
       ),
       UserModel(
+        uniqueName: 'hanie',
         name: 'هانیه حیدری',
         role: 'مدیر فروش',
         profilePhoto: '${ApiUrlConstants.baseUrl}hanie.jpg',
@@ -44,6 +49,7 @@ class DashboardScreen extends StatelessWidget {
         lastTaskToday: 'آخرین تسک تستی دیروز هانیه',
       ),
       UserModel(
+        uniqueName: 'ghaem',
         name: 'قائم علی‌آبادی',
         role: 'مسئول ربات',
         profilePhoto: '${ApiUrlConstants.baseUrl}ghaem.jpg',
@@ -52,6 +58,7 @@ class DashboardScreen extends StatelessWidget {
         lastTaskToday: 'آخرین تسک تستی دیروز قائم',
       ),
       UserModel(
+        uniqueName: 'mobina',
         name: 'مبینا هاشمیان',
         role: 'مدیر دپارتمان تجربی',
         profilePhoto: '${ApiUrlConstants.baseUrl}mobina.jpg',
@@ -272,16 +279,23 @@ class DashboardScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return Column(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(8,12,8,12),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            child: ClipRRect(
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(() => ProfileScreen(
+                                          user: users[index],
+                                        ),
+                                        transition: Transition.circularReveal,
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(8,12,8,12),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(12),
                                                 child: Image.network(
@@ -290,34 +304,34 @@ class DashboardScreen extends StatelessWidget {
                                                   width: 48,
                                                   height: 48,
                                                 )),
-                                          ),
-                                          const SizedBox(
-                                            width: 12,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(users[index].name!,
-                                                  style: textTheme.bodyMedium),
-                                              Text(users[index].role!,
-                                                style: textTheme.bodySmall?.copyWith(
-                                                    color: colorScheme.primary, fontSize: 16)),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      // is active today
-                                      users[index].isActiveToday!
-                                          ? Text('فعال',
-                                              style: textTheme.bodyMedium
-                                                  ?.copyWith(
-                                                      color: colorScheme.tertiary))
-                                          : Text('غیرفعال',
-                                              style: textTheme.bodyMedium
-                                                  ?.copyWith(
-                                                      color: colorScheme.primary)),
-                                    ],
+                                            const SizedBox(
+                                              width: 12,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(users[index].name!,
+                                                    style: textTheme.bodyMedium),
+                                                Text(users[index].role!,
+                                                  style: textTheme.bodySmall?.copyWith(
+                                                      color: colorScheme.primary, fontSize: 16)),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        // is active today
+                                        users[index].isActiveToday!
+                                            ? Text('فعال',
+                                                style: textTheme.bodyMedium
+                                                    ?.copyWith(
+                                                        color: colorScheme.tertiary))
+                                            : Text('غیرفعال',
+                                                style: textTheme.bodyMedium
+                                                    ?.copyWith(
+                                                        color: colorScheme.primary)),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Divider(
