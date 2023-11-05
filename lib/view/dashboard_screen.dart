@@ -7,11 +7,13 @@ import '../model/user_model.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final List<UserModel> users = [
       UserModel(
         name: 'عرفان حسن‌پور',
+        role: 'مدیر دپارتمان ریاضی',
         profilePhoto: '${ApiUrlConstants.baseUrl}erfan.jpg',
         yesterdayLength: 195,
         isActiveToday: true,
@@ -19,6 +21,7 @@ class DashboardScreen extends StatelessWidget {
       ),
       UserModel(
         name: 'هدی لطفی',
+        role: 'مدیر محتوا',
         profilePhoto: '${ApiUrlConstants.baseUrl}hoda.jpg',
         yesterdayLength: 205,
         isActiveToday: true,
@@ -26,6 +29,7 @@ class DashboardScreen extends StatelessWidget {
       ),
       UserModel(
         name: 'حنانه اشراقی',
+        role: 'مدیر دپارتمان انسانی',
         profilePhoto: '${ApiUrlConstants.baseUrl}hana.jpg',
         yesterdayLength: 125,
         isActiveToday: true,
@@ -33,13 +37,15 @@ class DashboardScreen extends StatelessWidget {
       ),
       UserModel(
         name: 'هانیه حیدری',
-        profilePhoto: '${ApiUrlConstants.baseUrl}hana.jpg',
+        role: 'مدیر فروش',
+        profilePhoto: '${ApiUrlConstants.baseUrl}hanie.jpg',
         yesterdayLength: 140,
-        isActiveToday: true,
+        isActiveToday: false,
         lastTaskToday: 'آخرین تسک تستی دیروز هانیه',
       ),
       UserModel(
         name: 'قائم علی‌آبادی',
+        role: 'مسئول ربات',
         profilePhoto: '${ApiUrlConstants.baseUrl}ghaem.jpg',
         yesterdayLength: 155,
         isActiveToday: true,
@@ -47,9 +53,10 @@ class DashboardScreen extends StatelessWidget {
       ),
       UserModel(
         name: 'مبینا هاشمیان',
+        role: 'مدیر دپارتمان تجربی',
         profilePhoto: '${ApiUrlConstants.baseUrl}mobina.jpg',
         yesterdayLength: 100,
-        isActiveToday: true,
+        isActiveToday: false,
         lastTaskToday: 'آخرین تسک تستی دیروز مبینا',
       ),
     ];
@@ -113,9 +120,16 @@ class DashboardScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 16.0),
-                    child: Text('آمار و تحلیل گزارش‌کارهای تاج‌کنکور',
-                        style: textTheme.bodyMedium
-                            ?.copyWith(color: colorScheme.primary)),
+                    child: Row(
+                      children: [
+                        Text('آمار و تحلیل گزارشکارها',
+                            style: textTheme.bodyMedium
+                                ?.copyWith(color: colorScheme.primary)),
+                        Text('-  تاج‌کنکور',
+                            style: textTheme.bodyMedium
+                                ?.copyWith(color: colorScheme.primary)),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -153,9 +167,10 @@ class DashboardScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            MostActiveYesterdayColumnBuilder(
+                            mostActiveYesterdayColumnBuilder(
                                 colorScheme, pageWidth, textTheme, users[0]),
-                            MostActiveYesterdayColumnBuilder(
+                            const SizedBox(width: 2,),
+                            mostActiveYesterdayColumnBuilder(
                                 colorScheme, pageWidth, textTheme, users[1]),
                           ],
                         ),
@@ -192,24 +207,25 @@ class DashboardScreen extends StatelessWidget {
                                     ?.copyWith(color: Colors.white)),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8.0,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             LinearPercentIndicator(
-                              percent: 2 / 7,
+                        // active users today / all users
+                              percent: users.where((element) => element.isActiveToday!).length / users.length,
                               width: MediaQuery.sizeOf(context).width * 0.75,
                               lineHeight: 16,
                               animation: true,
                               animateFromLastPercent: true,
                               progressColor: Colors.white,
                               backgroundColor: Colors.white70,
-                              barRadius: Radius.circular(50),
+                              barRadius: const Radius.circular(50),
                               padding: EdgeInsets.zero,
                             ),
-                            Text('7/2',
+                            Text(convertToPersianNumber(users.where((element) => element.isActiveToday!).length.toString() + "/" + users.length.toString()),
                                 style: textTheme.headlineMedium
                                     ?.copyWith(color: Colors.white)),
                           ],
@@ -219,6 +235,106 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                    padding: const EdgeInsets.all(12.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14),
+                      color: colorScheme.secondary,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 4,
+                          color: colorScheme.shadow,
+                          offset: const Offset(0.0, 2.0),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            Text('لیست کل اعضا', style: textTheme.displaySmall),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        // build a listview of users
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: users.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(8,12,8,12),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                child: Image.network(
+                                                  users[index].profilePhoto!,
+                                                  fit: BoxFit.cover,
+                                                  width: 48,
+                                                  height: 48,
+                                                )),
+                                          ),
+                                          const SizedBox(
+                                            width: 12,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(users[index].name!,
+                                                  style: textTheme.bodyMedium),
+                                              Text(users[index].role!,
+                                                style: textTheme.bodySmall?.copyWith(
+                                                    color: colorScheme.primary, fontSize: 16)),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      // is active today
+                                      users[index].isActiveToday!
+                                          ? Text('فعال',
+                                              style: textTheme.bodyMedium
+                                                  ?.copyWith(
+                                                      color: colorScheme.tertiary))
+                                          : Text('غیرفعال',
+                                              style: textTheme.bodyMedium
+                                                  ?.copyWith(
+                                                      color: colorScheme.primary)),
+                                    ],
+                                  ),
+                                ),
+                                Divider(
+                                  height: 1,
+                                  thickness: 1,
+                                  color: colorScheme.outline,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                      ],
+                    )),
+              )
             ],
           ),
         ),
@@ -226,7 +342,7 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Column MostActiveYesterdayColumnBuilder(ColorScheme colorScheme,
+  Column mostActiveYesterdayColumnBuilder(ColorScheme colorScheme,
       double pageWidth, TextTheme textTheme, UserModel user) {
     return Column(
       children: [
@@ -258,5 +374,20 @@ class DashboardScreen extends StatelessWidget {
             style: textTheme.bodySmall?.copyWith(color: colorScheme.primary)),
       ],
     );
+  }
+
+  convertToPersianNumber(String input) {
+    var result = input;
+    result = result.replaceAll('0', '۰');
+    result = result.replaceAll('1', '۱');
+    result = result.replaceAll('2', '۲');
+    result = result.replaceAll('3', '۳');
+    result = result.replaceAll('4', '۴');
+    result = result.replaceAll('5', '۵');
+    result = result.replaceAll('6', '۶');
+    result = result.replaceAll('7', '۷');
+    result = result.replaceAll('8', '۸');
+    result = result.replaceAll('9', '۹');
+    return result;
   }
 }

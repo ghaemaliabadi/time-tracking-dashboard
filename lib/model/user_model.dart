@@ -1,16 +1,18 @@
 import 'package:report_dashboard_with_getx/constant/api_constants.dart';
 
 class UserModel {
-  // int? id;
+  String? uniqueName;
   String? name;
+  String? role;
   String? profilePhoto;
   int? yesterdayLength;
   bool? isActiveToday;
   String? lastTaskToday;
 
   UserModel({
-    // this.id,
+    this.uniqueName,
     this.name,
+    this.role,
     this.profilePhoto,
     this.yesterdayLength,
     this.isActiveToday,
@@ -18,8 +20,9 @@ class UserModel {
   });
 
   UserModel.fromJson(Map<String, dynamic> element) {
-    // id = element['id'];
+    uniqueName = element['unique_name'];
     name = element['name'];
+    role = element['role'];
     profilePhoto = ApiUrlConstants.baseUrl + element['profile_photo'];
     yesterdayLength = element['yesterday_length'];
     isActiveToday = element['is_active_today'];
@@ -32,6 +35,15 @@ class UserModel {
     } else {
       var min = yesterdayLength! % 60;
       var hour = yesterdayLength! ~/ 60;
+      if (min < 10 && hour < 10) {
+        return convertToPersianNumber('0$hour:0$min');
+      }
+      if (min < 10) {
+        return convertToPersianNumber('$hour:0$min');
+      }
+      if (hour < 10) {
+        return convertToPersianNumber('0$hour:$min');
+      }
       return convertToPersianNumber('$hour:$min');
     }
   }

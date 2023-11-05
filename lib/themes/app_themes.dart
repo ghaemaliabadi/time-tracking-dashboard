@@ -11,6 +11,7 @@ class AppThemes {
     surfaceVariant: Color(0xFF49454F),
     onSurfaceVariant: Color(0xFFCAC4D0),
     shadow: Color(0x33000000),
+    outline: Color(0xFF1e2832),
   );
 
   static ColorScheme lightTheme = const ColorScheme.light(
@@ -22,6 +23,7 @@ class AppThemes {
     surfaceVariant: Color(0xFF57545B),
     onSurfaceVariant: Color(0xFF757575),
     shadow: Color(0x33000000),
+    outline: Color(0xFFe4e7ea),
   );
   static const displayLargeSize = 32.0 + 8;
   static const displayMediumSize = 28.0 + 8;
