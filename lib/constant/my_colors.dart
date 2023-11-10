@@ -5,14 +5,12 @@ class SolidColors {
 }
 
 class GradientColors {
-  // static const List<Color> bottomNav = [
-  //   Color.fromARGB(255, 25, 0, 94),
-  //   Color.fromARGB(255, 68, 4, 87)
-  // ];
+  static const List<Color> chartContainerRed = [
+    Color.fromARGB(255, 251, 11, 5),
+    Color.fromARGB(255, 255, 0, 104)
+  ];
+  static const List<Color> chartContainerBlue = [
+    Color.fromARGB(255, 142, 140, 251),
+    Color.fromARGB(255, 92, 87, 232)
+  ];
 }
-
-
-
-
-
-
