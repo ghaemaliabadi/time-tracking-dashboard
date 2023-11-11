@@ -1,8 +1,6 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:report_dashboard_with_getx/constant/api_constants.dart';
 import 'package:report_dashboard_with_getx/constant/my_colors.dart';
 import '../controller/theme_controller.dart';
 import '../model/user_model.dart';
@@ -64,45 +62,45 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 32,
-              ),
               Stack(children: [
-                Column(
-                  children: [
-                    const SizedBox(
-                      height: 55,
-                    ),
-                    Divider(
-                      height: 0,
-                      thickness: 1,
-                      color: colorScheme.onBackground.withOpacity(0.04),
-                    ),
-                    const SizedBox(
-                      height: 55,
-                    ),
-                    Divider(
-                      height: 0,
-                      thickness: 1,
-                      color: colorScheme.onBackground.withOpacity(0.04),
-                    ),
-                    const SizedBox(
-                      height: 55,
-                    ),
-                    Divider(
-                      height: 0,
-                      thickness: 1,
-                      color: colorScheme.onBackground.withOpacity(0.04),
-                    ),
-                    const SizedBox(
-                      height: 55,
-                    ),
-                    Divider(
-                      height: 0,
-                      thickness: 1,
-                      color: colorScheme.onBackground.withOpacity(0.1),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 55,
+                      ),
+                      Divider(
+                        height: 0,
+                        thickness: 1,
+                        color: colorScheme.onBackground.withOpacity(0.04),
+                      ),
+                      const SizedBox(
+                        height: 55,
+                      ),
+                      Divider(
+                        height: 0,
+                        thickness: 1,
+                        color: colorScheme.onBackground.withOpacity(0.04),
+                      ),
+                      const SizedBox(
+                        height: 55,
+                      ),
+                      Divider(
+                        height: 0,
+                        thickness: 1,
+                        color: colorScheme.onBackground.withOpacity(0.04),
+                      ),
+                      const SizedBox(
+                        height: 55,
+                      ),
+                      Divider(
+                        height: 0,
+                        thickness: 1,
+                        color: colorScheme.onBackground.withOpacity(0.1),
+                      ),
+                    ],
+                  ),
                 ),
                 Container(
                   width: double.infinity,
@@ -114,31 +112,33 @@ class ProfileScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 15,
                     itemBuilder: (context, index) {
-                      var maxSizeForCol = 219;
+                      var maxSizeForCol = 199;
                       // create random number
                       // var rand = Random().nextInt(20) % 6;
                       var rand = index % 3;
                       var sizeOfCol = maxSizeForCol / (rand + 1);
                       return Column(
                         children: [
-                          SizedBox(height: maxSizeForCol - sizeOfCol),
+                          SizedBox(height: maxSizeForCol - sizeOfCol + 25),
                           GestureDetector(
                             onTapDown: (TapDownDetails details) {
                               userClickedOnX.value = details.globalPosition.dx;
-                              print('x: ${details.globalPosition.dx}');
                               userClickedOnY.value = details.globalPosition.dy;
-                              print('y: ${details.globalPosition.dy}');
                               isBoxVisible.value = true;
-                              // make it invisible after 1 second
-                              Future.delayed(const Duration(seconds: 1), () {
-                                isBoxVisible.value = false;
-                              });
+                            },
+                            onTapUp: (TapUpDetails details) {
+                              isBoxVisible.value = false;
+                            },
+                            onTapCancel: () {
+                              isBoxVisible.value = false;
                             },
                             child: Container(
                               // round on top
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
-                                  colors: Get.find<ThemeController>().isDarkMode.value
+                                  colors: Get.find<ThemeController>()
+                                          .isDarkMode
+                                          .value
                                       ? GradientColors.chartContainerRed
                                       : GradientColors.chartContainerBlue,
                                   begin: Alignment.topLeft,
@@ -172,18 +172,50 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 Obx(
-                  () => Visibility(
-                    visible: isBoxVisible.value,
-                    child: Positioned(
-                      top: (userClickedOnY.value - 150 > 0) ? userClickedOnY.value - 150 : 130 - userClickedOnY.value,
-                      left: (userClickedOnX.value - 100 > 0) ? userClickedOnX.value - 100 : userClickedOnX.value,
-                      child: Container( // TODO: design this box
-                        width: 100,
-                        height: 50,
-                        color: Colors.red,
+                  () {
+                    var side = 'right';
+                    return Visibility(
+                      visible: isBoxVisible.value,
+                      child: Positioned(
+                        top: userClickedOnY.value - 100,
+                        right: () {
+                          if (userClickedOnX.value < 100) {
+                            return null;
+                          } else {
+                            return pageWidth - userClickedOnX.value + 10;
+                          }
+                        }(),
+                        left: () {
+                          if (userClickedOnX.value < 100) {
+                            side = 'left';
+                            return userClickedOnX.value + 10;
+                          } else {
+                            return null;
+                          }
+                        }(),
+                        child: CustomPaint(
+                          painter: ShapePainter(
+                              color: colorScheme.surfaceVariant, side: side),
+                          child: Container(
+                            // container most be a rounded rectangle with shadow like a bubble
+                            decoration: BoxDecoration(
+                              color: colorScheme.surfaceVariant,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: colorScheme.shadow,
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            width: 100,
+                            height: 50,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  }
                 ),
               ]),
             ],
@@ -207,4 +239,48 @@ class ProfileScreen extends StatelessWidget {
     result = result.replaceAll('9', '۹');
     return result;
   }
+}
+
+class ShapePainter extends CustomPainter {
+  Color color;
+  String side;
+
+  // get color on constructor as ShapePainter() or ShapePainter(color: Colors.red)
+  ShapePainter({this.color = Colors.white, this.side = 'right'});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..color = color
+      ..strokeWidth = 1
+      ..style = PaintingStyle.fill;
+    const double triangleH = 10;
+    const double triangleW = 25.0;
+    final double width = size.width;
+    final double height = size.height;
+    if (side == 'right') {
+      // this path is for triangle on right of bubble
+      final Path trianglePath = Path()
+        ..moveTo(width, height / 2 - triangleW / 2)
+        ..lineTo(width + triangleH, height / 2)
+        ..lineTo(width, height / 2 + triangleW / 2)
+        ..lineTo(width, height / 2 - triangleW / 2);
+      canvas.drawPath(trianglePath, paint);
+    } else {
+      // this path is for triangle on left of bubble:
+      final Path trianglePath = Path()
+        ..moveTo(0, height / 2 - triangleW / 2)
+        ..lineTo(-triangleH, height / 2)
+        ..lineTo(0, height / 2 + triangleW / 2)
+        ..lineTo(0, height / 2 - triangleW / 2);
+      canvas.drawPath(trianglePath, paint);
+    }
+    final BorderRadius borderRadius = BorderRadius.circular(15);
+    final Rect rect = Rect.fromLTRB(0, 0, width, height);
+    final RRect outer = borderRadius.toRRect(rect);
+    canvas.drawRRect(outer, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
