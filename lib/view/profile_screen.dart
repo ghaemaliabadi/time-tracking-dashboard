@@ -12,6 +12,9 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var uniqueName = user.uniqueName;
+    // TODO: get User Data From Back-End
+
     Get.put(ThemeController());
     var textTheme = Theme.of(context).textTheme;
     var colorScheme = Theme.of(context).colorScheme;
@@ -159,7 +162,7 @@ class ProfileScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Text(
-                              '${21 - index}/7',
+                              convertToPersianNumber('7/${21 - index}'),
                               style: textTheme.bodySmall!.copyWith(
                                 color: colorScheme.onBackground,
                                 fontSize: 16,
@@ -177,16 +180,16 @@ class ProfileScreen extends StatelessWidget {
                     return Visibility(
                       visible: isBoxVisible.value,
                       child: Positioned(
-                        top: userClickedOnY.value - 100,
+                        top: userClickedOnY.value - pageHeight / 9.1,
                         right: () {
-                          if (userClickedOnX.value < 100) {
+                          if (userClickedOnX.value < 110) {
                             return null;
                           } else {
                             return pageWidth - userClickedOnX.value + 10;
                           }
                         }(),
                         left: () {
-                          if (userClickedOnX.value < 100) {
+                          if (userClickedOnX.value < 110) {
                             side = 'left';
                             return userClickedOnX.value + 10;
                           } else {
@@ -195,11 +198,10 @@ class ProfileScreen extends StatelessWidget {
                         }(),
                         child: CustomPaint(
                           painter: ShapePainter(
-                              color: colorScheme.surfaceVariant, side: side),
+                              color: colorScheme.outline, side: side),
                           child: Container(
-                            // container most be a rounded rectangle with shadow like a bubble
-                            decoration: BoxDecoration(
-                              color: colorScheme.surfaceVariant,
+                          decoration: BoxDecoration(
+                              color: colorScheme.outline,
                               borderRadius: BorderRadius.circular(16),
                               boxShadow: [
                                 BoxShadow(
@@ -211,6 +213,13 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             width: 100,
                             height: 50,
+                            child: Center(child: Text(
+                                '۱۳:۱۳  ساعت',
+                                style: TextStyle(
+                                  color: colorScheme.onBackground,
+                                  fontSize: 16,
+                                ),
+                            )),
                           ),
                         ),
                       ),
@@ -218,6 +227,7 @@ class ProfileScreen extends StatelessWidget {
                   }
                 ),
               ]),
+              const Text('سلام')
             ],
           ),
         ),

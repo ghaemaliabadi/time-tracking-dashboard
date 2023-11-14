@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:report_dashboard_with_getx/themes/app_themes.dart';
 import 'package:report_dashboard_with_getx/view/dashboard_screen.dart';
@@ -22,22 +23,23 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Report Dashboard',
-      locale: const Locale('fa', 'IR'),
+      locale: const Locale('fa'),
+      fallbackLocale: const Locale('en', 'US'),
       theme: AppThemes.light,
       darkTheme: AppThemes.dark,
       themeMode: Get.find<ThemeController>().isDarkMode.value
           ? ThemeMode.dark
           : ThemeMode.light,
-      // home: DashboardScreen(),
-      home: ProfileScreen(user: UserModel(
-        uniqueName: 'hoda',
-        name: 'هدی لطفی',
-        role: 'مدیر محتوا',
-        profilePhoto: '${ApiUrlConstants.baseUrl}hoda.jpg',
-        yesterdayLength: 205,
-        isActiveToday: true,
-        lastTaskToday: 'آخرین تسک تستی دیروز هدی',
-      )),
+      home: DashboardScreen(),
+      // home: ProfileScreen(user: UserModel(
+      //   uniqueName: 'hoda',
+      //   name: 'هدی لطفی',
+      //   role: 'مدیر محتوا',
+      //   profilePhoto: '${ApiUrlConstants.baseUrl}hoda.jpg',
+      //   yesterdayLength: 205,
+      //   isActiveToday: true,
+      //   lastTaskToday: 'آخرین تسک تستی دیروز هدی',
+      // )),
     );
   }
 }

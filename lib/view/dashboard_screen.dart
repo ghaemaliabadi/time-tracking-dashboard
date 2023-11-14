@@ -74,9 +74,10 @@ class DashboardScreen extends StatelessWidget {
     var colorScheme = Theme.of(context).colorScheme;
     var pageWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 48.0),
           child: Column(
             children: [
               const SizedBox(height: 8.0),
@@ -129,10 +130,7 @@ class DashboardScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 16.0),
                     child: Row(
                       children: [
-                        Text('آمار و تحلیل گزارشکارها',
-                            style: textTheme.bodyMedium
-                                ?.copyWith(color: colorScheme.primary)),
-                        Text('-  تاج‌کنکور',
+                        Text('آمار و تحلیل گزارشکارهای تاج‌کنکور',
                             style: textTheme.bodyMedium
                                 ?.copyWith(color: colorScheme.primary)),
                       ],
@@ -165,7 +163,7 @@ class DashboardScreen extends StatelessWidget {
                               width: 16,
                             ),
                             Text('فعال‌ترین‌های دیروز',
-                                style: textTheme.displaySmall),
+                                style: textTheme.headlineLarge),
                           ],
                         ),
                         const SizedBox(
@@ -210,7 +208,7 @@ class DashboardScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text('تعداد اعضای فعال امروز',
-                                style: textTheme.headlineLarge
+                                style: textTheme.headlineMedium
                                     ?.copyWith(color: Colors.white)),
                           ],
                         ),
@@ -223,7 +221,7 @@ class DashboardScreen extends StatelessWidget {
                             LinearPercentIndicator(
                         // active users today / all users
                               percent: users.where((element) => element.isActiveToday!).length / users.length,
-                              width: MediaQuery.sizeOf(context).width * 0.75,
+                              width: MediaQuery.sizeOf(context).width * 0.68,
                               lineHeight: 16,
                               animation: true,
                               animateFromLastPercent: true,
@@ -232,7 +230,7 @@ class DashboardScreen extends StatelessWidget {
                               barRadius: const Radius.circular(50),
                               padding: EdgeInsets.zero,
                             ),
-                            Text(convertToPersianNumber(users.where((element) => element.isActiveToday!).length.toString() + "/" + users.length.toString()),
+                            Text(convertToPersianNumber("${users.where((element) => element.isActiveToday!).length}/${users.length}"),
                                 style: textTheme.headlineMedium
                                     ?.copyWith(color: Colors.white)),
                           ],
@@ -265,11 +263,8 @@ class DashboardScreen extends StatelessWidget {
                             const SizedBox(
                               width: 16,
                             ),
-                            Text('لیست کل اعضا', style: textTheme.displaySmall),
+                            Text('لیست کل اعضا', style: textTheme.headlineLarge),
                           ],
-                        ),
-                        const SizedBox(
-                          height: 16,
                         ),
                         // build a listview of users
                         ListView.builder(
@@ -282,22 +277,22 @@ class DashboardScreen extends StatelessWidget {
                                 InkWell(
                                   onTap: () {
                                     Get.to(() => ProfileScreen(
-                                          user: users[index],
-                                        ),
-                                        transition: Transition.circularReveal,
+                                      user: users[index],
+                                    ),
+                                      transition: Transition.circularReveal,
                                     );
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.fromLTRB(8,12,8,12),
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
                                             ClipRRect(
                                                 borderRadius:
-                                                    BorderRadius.circular(12),
+                                                BorderRadius.circular(12),
                                                 child: Image.network(
                                                   users[index].profilePhoto!,
                                                   fit: BoxFit.cover,
@@ -309,13 +304,13 @@ class DashboardScreen extends StatelessWidget {
                                             ),
                                             Column(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                               children: [
                                                 Text(users[index].name!,
                                                     style: textTheme.bodyMedium),
                                                 Text(users[index].role!,
-                                                  style: textTheme.bodySmall?.copyWith(
-                                                      color: colorScheme.primary, fontSize: 16)),
+                                                    style: textTheme.bodySmall?.copyWith(
+                                                        color: colorScheme.primary, fontSize: 16)),
                                               ],
                                             ),
                                           ],
@@ -323,13 +318,13 @@ class DashboardScreen extends StatelessWidget {
                                         // is active today
                                         users[index].isActiveToday!
                                             ? Text('فعال',
-                                                style: textTheme.bodyMedium
-                                                    ?.copyWith(
-                                                        color: colorScheme.tertiary))
+                                            style: textTheme.bodyMedium
+                                                ?.copyWith(
+                                                color: colorScheme.tertiary))
                                             : Text('غیرفعال',
-                                                style: textTheme.bodyMedium
-                                                    ?.copyWith(
-                                                        color: colorScheme.primary)),
+                                            style: textTheme.bodyMedium
+                                                ?.copyWith(
+                                                color: colorScheme.primary)),
                                       ],
                                     ),
                                   ),
