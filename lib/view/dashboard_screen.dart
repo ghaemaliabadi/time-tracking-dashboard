@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:report_dashboard_with_getx/constant/api_constants.dart';
+import 'package:animations/animations.dart';
 import 'package:report_dashboard_with_getx/view/profile_screen.dart';
 import '../controller/theme_controller.dart';
 import '../model/user_model.dart';
@@ -76,122 +77,72 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 48.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 8.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: Text(
-                      'داشبورد',
-                      style: textTheme.displayLarge,
-                    ),
+        child: Column(
+          children: [
+            // const SizedBox(height: 60.0),
+            const SizedBox(height: 8.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Text(
+                    'داشبورد',
+                    style: textTheme.displayLarge,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: IconButton(
-                      style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(1000.0),
-                          ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: IconButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(1000.0),
                         ),
                       ),
-                      onPressed: () {
-                        Get.find<ThemeController>().toggleTheme();
-                      },
-                      icon: Icon(
-                        size: 36.0,
-                        shadows: [
-                          BoxShadow(
-                            color: colorScheme.surfaceVariant,
-                            blurRadius: 2.0,
-                            offset: const Offset(0.0, 1.0),
-                          ),
-                        ],
-                        Get.isDarkMode
-                            ? Icons.wb_sunny
-                            : Icons.nightlight_round,
-                      ),
                     ),
-                  ),
-                ],
-              ),
-              // const SizedBox(height: 16.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: Row(
-                      children: [
-                        Text('آمار و تحلیل گزارشکارهای تاج‌کنکور',
-                            style: textTheme.bodyMedium
-                                ?.copyWith(color: colorScheme.primary)),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12.0),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                    padding: const EdgeInsets.all(12.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      color: colorScheme.secondary,
-                      boxShadow: [
+                    onPressed: () {
+                      Get.find<ThemeController>().toggleTheme();
+                    },
+                    icon: Icon(
+                      size: 36.0,
+                      shadows: [
                         BoxShadow(
-                          blurRadius: 4,
-                          color: colorScheme.shadow,
-                          offset: const Offset(0.0, 2.0),
+                          color: colorScheme.surfaceVariant,
+                          blurRadius: 2.0,
+                          offset: const Offset(0.0, 1.0),
                         ),
                       ],
+                      Get.isDarkMode ? Icons.wb_sunny : Icons.nightlight_round,
                     ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: 16,
-                            ),
-                            Text('فعال‌ترین‌های دیروز',
-                                style: textTheme.headlineLarge),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            mostActiveYesterdayColumnBuilder(
-                                colorScheme, pageWidth, textTheme, users[0]),
-                            const SizedBox(width: 2,),
-                            mostActiveYesterdayColumnBuilder(
-                                colorScheme, pageWidth, textTheme, users[1]),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                      ],
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-                child: Container(
+                  ),
+                ),
+              ],
+            ),
+            // const SizedBox(height: 16.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Row(
+                    children: [
+                      Text('آمار و تحلیل گزارشکارهای تاج‌کنکور',
+                          style: textTheme.bodyMedium
+                              ?.copyWith(color: colorScheme.primary)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12.0),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
                   padding: const EdgeInsets.all(12.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(14),
-                    color: colorScheme.tertiary,
+                    color: colorScheme.secondary,
                     boxShadow: [
                       BoxShadow(
                         blurRadius: 4,
@@ -200,99 +151,159 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(12.0, 4.0, 12.0, 4.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text('تعداد اعضای فعال امروز',
-                                style: textTheme.headlineMedium
-                                    ?.copyWith(color: Colors.white)),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            LinearPercentIndicator(
-                        // active users today / all users
-                              percent: users.where((element) => element.isActiveToday!).length / users.length,
-                              width: MediaQuery.sizeOf(context).width * 0.68,
-                              lineHeight: 16,
-                              animation: true,
-                              animateFromLastPercent: true,
-                              progressColor: Colors.white,
-                              backgroundColor: Colors.white70,
-                              barRadius: const Radius.circular(50),
-                              padding: EdgeInsets.zero,
-                            ),
-                            Text(convertToPersianNumber("${users.where((element) => element.isActiveToday!).length}/${users.length}"),
-                                style: textTheme.headlineMedium
-                                    ?.copyWith(color: Colors.white)),
-                          ],
-                        )
-                      ],
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Text('فعال‌ترین‌های دیروز',
+                              style: textTheme.headlineLarge),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          mostActiveYesterdayColumnBuilder(
+                              colorScheme, pageWidth, textTheme, users[0]),
+                          const SizedBox(
+                            width: 2,
+                          ),
+                          mostActiveYesterdayColumnBuilder(
+                              colorScheme, pageWidth, textTheme, users[1]),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                    ],
+                  )),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+              child: Container(
+                padding: const EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  color: colorScheme.tertiary,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 4,
+                      color: colorScheme.shadow,
+                      offset: const Offset(0.0, 2.0),
                     ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(12.0, 4.0, 12.0, 4.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text('تعداد اعضای فعال امروز',
+                              style: textTheme.headlineMedium
+                                  ?.copyWith(color: Colors.white)),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          LinearPercentIndicator(
+                            // active users today / all users
+                            percent: users
+                                    .where((element) => element.isActiveToday!)
+                                    .length /
+                                users.length,
+                            width: MediaQuery.sizeOf(context).width * 0.68,
+                            lineHeight: 16,
+                            animation: true,
+                            animateFromLastPercent: true,
+                            progressColor: Colors.white,
+                            backgroundColor: Colors.white70,
+                            barRadius: const Radius.circular(50),
+                            padding: EdgeInsets.zero,
+                          ),
+                          Text(
+                              convertToPersianNumber(
+                                  "${users.where((element) => element.isActiveToday!).length}/${users.length}"),
+                              style: textTheme.headlineMedium
+                                  ?.copyWith(color: Colors.white)),
+                        ],
+                      )
+                    ],
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                    padding: const EdgeInsets.all(12.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      color: colorScheme.secondary,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 4,
-                          color: colorScheme.shadow,
-                          offset: const Offset(0.0, 2.0),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: 16,
-                            ),
-                            Text('لیست کل اعضا', style: textTheme.headlineLarge),
-                          ],
-                        ),
-                        // build a listview of users
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: users.length,
-                          itemBuilder: (context, index) {
-                            return Column(
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                  padding: const EdgeInsets.all(12.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    color: colorScheme.secondary,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 4,
+                        color: colorScheme.shadow,
+                        offset: const Offset(0.0, 2.0),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Text('لیست کل اعضا', style: textTheme.headlineLarge),
+                        ],
+                      ),
+                      // build a listview of users
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: users.length,
+                        itemBuilder: (context, index) {
+                          return AnimatedContainer(
+                            duration: Duration(seconds: 1),
+                            child: Column(
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    Get.to(() => ProfileScreen(
-                                      user: users[index],
-                                    ),
-                                      transition: Transition.circularReveal,
+                                    Get.to(
+                                      () => ProfileScreen(
+                                        user: users[index],
+                                      ),
+                                      arguments: users[index],
+                                      transition: Transition.zoom,
+                                      duration:
+                                          const Duration(milliseconds: 350),
                                     );
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(8,12,8,12),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(8, 12, 8, 12),
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
                                             ClipRRect(
                                                 borderRadius:
-                                                BorderRadius.circular(12),
+                                                    BorderRadius.circular(12),
                                                 child: Image.network(
                                                   users[index].profilePhoto!,
                                                   fit: BoxFit.cover,
@@ -304,13 +315,17 @@ class DashboardScreen extends StatelessWidget {
                                             ),
                                             Column(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(users[index].name!,
-                                                    style: textTheme.bodyMedium),
+                                                    style:
+                                                        textTheme.bodyMedium),
                                                 Text(users[index].role!,
-                                                    style: textTheme.bodySmall?.copyWith(
-                                                        color: colorScheme.primary, fontSize: 16)),
+                                                    style: textTheme.bodySmall
+                                                        ?.copyWith(
+                                                            color: colorScheme
+                                                                .primary,
+                                                            fontSize: 16)),
                                               ],
                                             ),
                                           ],
@@ -318,13 +333,15 @@ class DashboardScreen extends StatelessWidget {
                                         // is active today
                                         users[index].isActiveToday!
                                             ? Text('فعال',
-                                            style: textTheme.bodyMedium
-                                                ?.copyWith(
-                                                color: colorScheme.tertiary))
+                                                style: textTheme.bodyMedium
+                                                    ?.copyWith(
+                                                        color: colorScheme
+                                                            .tertiary))
                                             : Text('غیرفعال',
-                                            style: textTheme.bodyMedium
-                                                ?.copyWith(
-                                                color: colorScheme.primary)),
+                                                style: textTheme.bodyMedium
+                                                    ?.copyWith(
+                                                        color: colorScheme
+                                                            .primary)),
                                       ],
                                     ),
                                   ),
@@ -335,17 +352,17 @@ class DashboardScreen extends StatelessWidget {
                                   color: colorScheme.outline,
                                 ),
                               ],
-                            );
-                          },
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                      ],
-                    )),
-              )
-            ],
-          ),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                    ],
+                  )),
+            )
+          ],
         ),
       ),
     );

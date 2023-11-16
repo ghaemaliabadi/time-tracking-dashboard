@@ -1,6 +1,6 @@
 import 'package:report_dashboard_with_getx/constant/api_constants.dart';
 
-class UserModel {
+class ProfileModel {
   String? uniqueName;
   String? name;
   String? profilePhoto;
@@ -12,7 +12,7 @@ class UserModel {
   String? minLength;
   String? aiText;
 
-  UserModel(
+  ProfileModel(
       {this.uniqueName,
       this.name,
       this.profilePhoto,
@@ -24,7 +24,7 @@ class UserModel {
       this.minLength,
       this.aiText});
 
-  UserModel.fromJson(Map<String, dynamic> element) {
+  ProfileModel.fromJson(Map<String, dynamic> element) {
     uniqueName = element['unique_name'];
     name = element['name'];
     profilePhoto = ApiUrlConstants.baseUrl + element['profile_photo'];

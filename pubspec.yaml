@@ -41,6 +41,7 @@ dependencies:
   percent_indicator: ^4.2.3
   flutter_localizations:
     sdk: flutter
+  animations: ^2.0.8
 
 dev_dependencies:
   flutter_test:
