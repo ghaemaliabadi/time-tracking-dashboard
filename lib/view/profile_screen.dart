@@ -26,6 +26,20 @@ class ProfileScreen extends StatelessWidget {
       absentCount: '۴',
       maxLength: '۰۶:۱۰',
       minLength: '۰۰:۴۰',
+      days: {
+        '7/20': '100',
+        '7/21': '150',
+        '7/22': '200',
+        '7/23': '250',
+        '7/24': '300',
+        '7/25': '350',
+        '7/26': '400',
+        '7/27': '450',
+        '7/28': '250',
+        '7/29': '0',
+        '7/30': '200',
+        '7/31': '220',
+      },
       aiText:
           'هدی لطفی این ماه خیلی کار کرده حاجی. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.',
     );
@@ -36,6 +50,7 @@ class ProfileScreen extends StatelessWidget {
     var pageHeight = MediaQuery.of(context).size.height;
     RxDouble userClickedOnX = 0.0.obs;
     RxDouble userClickedOnY = 0.0.obs;
+    RxInt clickedOn = 0.obs;
     RxBool isBoxVisible = false.obs;
     RxString showText = profile.aiText!.obs;
     showText.value = '${showText.value.substring(0, 140)}...';
@@ -132,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  itemCount: 15,
+                  itemCount: profile.days!.length,
                   itemBuilder: (context, index) {
                     var maxSizeForCol = 199;
                     // create random number
@@ -146,6 +161,7 @@ class ProfileScreen extends StatelessWidget {
                           onTapDown: (TapDownDetails details) {
                             userClickedOnX.value = details.globalPosition.dx;
                             userClickedOnY.value = details.globalPosition.dy;
+                            clickedOn.value = index;
                             isBoxVisible.value = true;
                           },
                           onTapUp: (TapUpDetails details) {
@@ -181,7 +197,7 @@ class ProfileScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Text(
-                            convertToPersianNumber('7/${21 - index}'),
+                            convertToPersianNumber(profile.days!.keys.toList()[index]),
                             style: textTheme.bodySmall!.copyWith(
                               color: colorScheme.onBackground,
                               fontSize: 16,
@@ -233,7 +249,8 @@ class ProfileScreen extends StatelessWidget {
                         height: 50,
                         child: Center(
                             child: Text(
-                          '۱۳:۱۳  ساعت',
+                              ProfileModel.convertLengthToHHMM(
+                                  profile.days!.values.toList()[clickedOn.value]) + '  ساعت',
                           style: TextStyle(
                             color: colorScheme.onBackground,
                             fontSize: 16,

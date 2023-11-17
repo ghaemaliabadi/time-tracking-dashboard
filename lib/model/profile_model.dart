@@ -11,6 +11,7 @@ class ProfileModel {
   String? maxLength;
   String? minLength;
   String? aiText;
+  Map<String, String>? days;
 
   ProfileModel(
       {this.uniqueName,
@@ -22,7 +23,9 @@ class ProfileModel {
       this.absentCount,
       this.maxLength,
       this.minLength,
-      this.aiText});
+      this.aiText,
+      this.days
+      });
 
   ProfileModel.fromJson(Map<String, dynamic> element) {
     uniqueName = element['unique_name'];
@@ -35,10 +38,11 @@ class ProfileModel {
     maxLength = convertToPersianNumber(element['max_length']);
     minLength = convertToPersianNumber(element['min_length']);
     aiText = element['ai_text'];
+    days = element['days'];
   }
 
   // convert english number to persian number
-  convertToPersianNumber(String input) {
+  static convertToPersianNumber(String input) {
     var result = input;
     result = result.replaceAll('0', '۰');
     result = result.replaceAll('1', '۱');
@@ -51,5 +55,21 @@ class ProfileModel {
     result = result.replaceAll('8', '۸');
     result = result.replaceAll('9', '۹');
     return result;
+  }
+
+  static convertLengthToHHMM(String length) {
+    var result = '';
+    var hour = int.parse(length) ~/ 60;
+    var minute = int.parse(length) % 60;
+    if (hour < 10) {
+      result += '۰';
+    }
+    result += hour.toString();
+    result += ':';
+    if (minute < 10) {
+      result += '۰';
+    }
+    result += minute.toString();
+    return convertToPersianNumber(result);
   }
 }
