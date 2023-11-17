@@ -256,7 +256,7 @@ class DashboardScreen extends StatelessWidget {
                         itemCount: users.length,
                         itemBuilder: (context, index) {
                           return AnimatedContainer(
-                            duration: Duration(seconds: 1),
+                            duration: const Duration(seconds: 1),
                             child: Column(
                               children: [
                                 InkWell(

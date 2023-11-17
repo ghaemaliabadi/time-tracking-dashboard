@@ -64,6 +64,7 @@ class ProfileScreen extends StatelessWidget {
       RxDouble animatedContainerHeight,
       RxBool isTextExpanded,
       ProfileController controller) {
+    var maxDayLength = profile.days!.values.reduce((a, b) => a > b ? a : b);
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -156,11 +157,16 @@ class ProfileScreen extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: profile.days!.length,
                 itemBuilder: (context, index) {
-                  var maxSizeForCol = 199;
+                  var maxSizeForCol = 199.0;
                   // create random number
                   // var rand = Random().nextInt(20) % 6;
-                  var rand = index % 3;
-                  var sizeOfCol = maxSizeForCol / (rand + 1);
+                  // var rand = index % 3;
+                  // var sizeOfCol = maxSizeForCol / (rand + 1);
+                  var sizeOfCol = maxSizeForCol;
+                  var thisDayLength = profile.days!.values.toList()[index];
+                  if (thisDayLength != 0) {
+                    sizeOfCol = ((maxSizeForCol - 25) * thisDayLength / maxDayLength) + 25;
+                  }
                   return Column(
                     children: [
                       SizedBox(height: maxSizeForCol - sizeOfCol + 25),
