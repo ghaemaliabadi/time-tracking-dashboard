@@ -20,12 +20,12 @@ class UserModel {
   });
 
   UserModel.fromJson(Map<String, dynamic> element) {
-    uniqueName = element['unique_name'];
+    uniqueName = element['unique_name'].toString();
     name = element['name'];
     role = element['role'];
     profilePhoto = ApiUrlConstants.baseUrl + element['profile_photo'];
-    yesterdayLength = element['yesterday_length'];
-    isActiveToday = element['is_active_today'];
+    yesterdayLength = int.tryParse(element['yesterday_length'] ?? '0');
+    isActiveToday = (element['is_active_today'].toString() == 'true') ? true : false;
     lastTaskToday = element['last_task_today'];
   }
 

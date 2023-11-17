@@ -4,6 +4,8 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:report_dashboard_with_getx/constant/api_constants.dart';
 import 'package:animations/animations.dart';
 import 'package:report_dashboard_with_getx/view/profile_screen.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import '../controller/dashboard_controller.dart';
 import '../controller/theme_controller.dart';
 import '../model/user_model.dart';
 
@@ -12,76 +14,37 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<UserModel> users = [
-      UserModel(
-        uniqueName: 'erfan',
-        name: 'عرفان حسن‌پور',
-        role: 'مدیر دپارتمان ریاضی',
-        profilePhoto: '${ApiUrlConstants.baseUrl}erfan.jpg',
-        yesterdayLength: 195,
-        isActiveToday: true,
-        lastTaskToday: 'آخرین تسک تستی دیروز عرفان',
-      ),
-      UserModel(
-        uniqueName: 'hoda',
-        name: 'هدی لطفی',
-        role: 'مدیر محتوا',
-        profilePhoto: '${ApiUrlConstants.baseUrl}hoda.jpg',
-        yesterdayLength: 205,
-        isActiveToday: true,
-        lastTaskToday: 'آخرین تسک تستی دیروز هدی',
-      ),
-      UserModel(
-        uniqueName: 'hana',
-        name: 'حنانه اشراقی',
-        role: 'مدیر دپارتمان انسانی',
-        profilePhoto: '${ApiUrlConstants.baseUrl}hana.jpg',
-        yesterdayLength: 125,
-        isActiveToday: true,
-        lastTaskToday: 'آخرین تسک تستی دیروز حنا',
-      ),
-      UserModel(
-        uniqueName: 'hanie',
-        name: 'هانیه حیدری',
-        role: 'مدیر فروش',
-        profilePhoto: '${ApiUrlConstants.baseUrl}hanie.jpg',
-        yesterdayLength: 140,
-        isActiveToday: false,
-        lastTaskToday: 'آخرین تسک تستی دیروز هانیه',
-      ),
-      UserModel(
-        uniqueName: 'ghaem',
-        name: 'قائم علی‌آبادی',
-        role: 'مسئول ربات',
-        profilePhoto: '${ApiUrlConstants.baseUrl}ghaem.jpg',
-        yesterdayLength: 155,
-        isActiveToday: true,
-        lastTaskToday: 'آخرین تسک تستی دیروز قائم',
-      ),
-      UserModel(
-        uniqueName: 'mobina',
-        name: 'مبینا هاشمیان',
-        role: 'مدیر دپارتمان تجربی',
-        profilePhoto: '${ApiUrlConstants.baseUrl}mobina.jpg',
-        yesterdayLength: 100,
-        isActiveToday: false,
-        lastTaskToday: 'آخرین تسک تستی دیروز مبینا',
-      ),
-    ];
-    // sort users by yesterdayLength
-    users.sort((a, b) => b.yesterdayLength!.compareTo(a.yesterdayLength!));
     Get.put(ThemeController());
     var textTheme = Theme.of(context).textTheme;
     var colorScheme = Theme.of(context).colorScheme;
     var pageWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            // const SizedBox(height: 60.0),
-            const SizedBox(height: 8.0),
-            Row(
+    return GetX<DashboardController>(
+        init: DashboardController(),
+        builder: (controller) {
+          return Scaffold(
+              body: /*controller.isLoading.value
+                  ? const Center(child: CircularProgressIndicator())
+                  : */buildSingleChildScrollView(textTheme, colorScheme,
+                      pageWidth, controller.users, context, controller));
+        });
+  }
+
+  SingleChildScrollView buildSingleChildScrollView(
+      TextTheme textTheme,
+      ColorScheme colorScheme,
+      double pageWidth,
+      List<UserModel> users,
+      BuildContext context,
+      DashboardController controller) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        children: [
+          // const SizedBox(height: 60.0),
+          const SizedBox(height: 8.0),
+          Skeletonizer(
+            enabled: controller.isLoading.value,
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
@@ -104,23 +67,28 @@ class DashboardScreen extends StatelessWidget {
                     onPressed: () {
                       Get.find<ThemeController>().toggleTheme();
                     },
-                    icon: Icon(
-                      size: 36.0,
-                      shadows: [
-                        BoxShadow(
-                          color: colorScheme.surfaceVariant,
-                          blurRadius: 2.0,
-                          offset: const Offset(0.0, 1.0),
-                        ),
-                      ],
-                      Get.isDarkMode ? Icons.wb_sunny : Icons.nightlight_round,
+                    icon: Skeleton.ignore(
+                      child: Icon(
+                        size: 36.0,
+                        shadows: [
+                          BoxShadow(
+                            color: colorScheme.surfaceVariant,
+                            blurRadius: 2.0,
+                            offset: const Offset(0.0, 1.0),
+                          ),
+                        ],
+                        Get.isDarkMode ? Icons.wb_sunny : Icons.nightlight_round,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-            // const SizedBox(height: 16.0),
-            Row(
+          ),
+          // const SizedBox(height: 16.0),
+          Skeletonizer(
+            enabled: controller.isLoading.value,
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
@@ -135,8 +103,11 @@ class DashboardScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12.0),
-            Padding(
+          ),
+          const SizedBox(height: 12.0),
+          Skeletonizer(
+            enabled: controller.isLoading.value,
+            child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(
                   padding: const EdgeInsets.all(12.0),
@@ -184,7 +155,11 @@ class DashboardScreen extends StatelessWidget {
                     ],
                   )),
             ),
-            Padding(
+          ),
+          Skeletonizer(
+            enabled: controller.isLoading.value,
+            containersColor: colorScheme.secondary,
+            child: Padding(
               padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
               child: Container(
                 padding: const EdgeInsets.all(12.0),
@@ -244,7 +219,10 @@ class DashboardScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
+          ),
+          Skeletonizer(
+            enabled: controller.isLoading.value,
+            child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(
                   padding: const EdgeInsets.all(12.0),
@@ -267,7 +245,8 @@ class DashboardScreen extends StatelessWidget {
                           const SizedBox(
                             width: 16,
                           ),
-                          Text('لیست کل اعضا', style: textTheme.headlineLarge),
+                          Text('لیست کل اعضا',
+                              style: textTheme.headlineLarge),
                         ],
                       ),
                       // build a listview of users
@@ -361,9 +340,9 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ],
                   )),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
