@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:report_dashboard_with_getx/constant/api_constants.dart';
-import 'package:animations/animations.dart';
 import 'package:report_dashboard_with_getx/view/profile_screen.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../controller/dashboard_controller.dart';
@@ -24,8 +22,9 @@ class DashboardScreen extends StatelessWidget {
           return Scaffold(
               body: /*controller.isLoading.value
                   ? const Center(child: CircularProgressIndicator())
-                  : */buildSingleChildScrollView(textTheme, colorScheme,
-                      pageWidth, controller.users, context, controller));
+                  : */
+                  buildSingleChildScrollView(textTheme, colorScheme, pageWidth,
+                      controller.users, context, controller));
         });
   }
 
@@ -77,7 +76,9 @@ class DashboardScreen extends StatelessWidget {
                             offset: const Offset(0.0, 1.0),
                           ),
                         ],
-                        Get.isDarkMode ? Icons.wb_sunny : Icons.nightlight_round,
+                        Get.isDarkMode
+                            ? Icons.wb_sunny
+                            : Icons.nightlight_round,
                       ),
                     ),
                   ),
@@ -245,8 +246,7 @@ class DashboardScreen extends StatelessWidget {
                           const SizedBox(
                             width: 16,
                           ),
-                          Text('لیست کل اعضا',
-                              style: textTheme.headlineLarge),
+                          Text('لیست کل اعضا', style: textTheme.headlineLarge),
                         ],
                       ),
                       // build a listview of users

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:report_dashboard_with_getx/constant/api_constants.dart';
-import 'package:report_dashboard_with_getx/gen/assets.gen.dart';
 import 'package:report_dashboard_with_getx/model/user_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -29,7 +28,7 @@ class DashboardController extends GetxController {
   void fetchData() async {
     isLoading(true);
     try {
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       http.Response response = await http
           .get(Uri.parse('${ApiUrlConstants.apiUrl}?method=get_user_list'));
       var i = 0;

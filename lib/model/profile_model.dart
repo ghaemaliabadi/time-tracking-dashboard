@@ -11,7 +11,7 @@ class ProfileModel {
   String? maxLength;
   String? minLength;
   String? aiText;
-  Map<String, String>? days;
+  Map<String, int>? days;
 
   ProfileModel(
       {this.uniqueName,
@@ -28,17 +28,18 @@ class ProfileModel {
       });
 
   ProfileModel.fromJson(Map<String, dynamic> element) {
-    uniqueName = element['unique_name'];
+    uniqueName = element['unique_name'].toString();
     name = element['name'];
     profilePhoto = ApiUrlConstants.baseUrl + element['profile_photo'];
     monthLength = convertToPersianNumber(element['month_length']);
-    monthTasks = convertToPersianNumber(element['month_tasks']);
+    monthTasks = convertToPersianNumber(element['month_tasks'].toString());
     averageLength = convertToPersianNumber(element['average_length']);
-    absentCount = convertToPersianNumber(element['absent_count']);
+    absentCount = convertToPersianNumber(element['absent_count'].toString());
     maxLength = convertToPersianNumber(element['max_length']);
     minLength = convertToPersianNumber(element['min_length']);
     aiText = element['ai_text'];
-    days = element['days'];
+    days = (element['days'] as Map<String, dynamic>)
+        .map((key, value) => MapEntry(key, int.tryParse(value.toString()) ?? 0));
   }
 
   // convert english number to persian number
@@ -57,10 +58,10 @@ class ProfileModel {
     return result;
   }
 
-  static convertLengthToHHMM(String length) {
+  static convertLengthToHHMM(int length) {
     var result = '';
-    var hour = int.parse(length) ~/ 60;
-    var minute = int.parse(length) % 60;
+    var hour = length ~/ 60;
+    var minute = length % 60;
     if (hour < 10) {
       result += '۰';
     }
