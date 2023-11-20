@@ -1,16 +1,17 @@
-# report_dashboard_with_getx
+# Report Dashboard With Getx
 
-my first Flutter app powered by GetX
+My first Flutter app powered by GetX
+
+This is a Flutter application that provides a dashboard to monitor the performance of employees in an organization.
+
+# Watch the App in Action
+
+
+https://github.com/ghaemaliabadi/report_dashboard_with_getx/assets/69913252/f6840514-daca-4073-a19b-964d0100b0bb
+
+
 
 ## Getting Started
+To get started with this project, create a flutter project, simply copy and paste the repository files into your project's root and open it in your preferred IDE. You will need to have Flutter installed on your machine to run the application.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Please note that this project requires a back-end server to fully function. The front-end code provided in this repository is designed to work with a corresponding Back-end system. You will need to set up and configure a Back-end server to integrate with this project. 
