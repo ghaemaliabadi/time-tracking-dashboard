@@ -1,4 +1,4 @@
-# Report Dashboard With Getx
+# Report Dashboard With GetX
 
 My first Flutter app powered by GetX.
 
